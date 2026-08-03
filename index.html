@@ -81,12 +81,8 @@
     </div>
 
     <!-- Location Selection Popup Modal -->
-    <div id="locationModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm py-[15px]" style="display: none;" onclick="if(event.target===this)forceCloseLocationModal()">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden relative">
-            <!-- Close Button -->
-            <button onclick="forceCloseLocationModal()" class="absolute top-3 right-3 z-10 h-8 w-8 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center transition-all">
-                <i class="fas fa-times text-white text-sm"></i>
-            </button>
+    <div id="locationModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm py-[15px]" style="display: none;">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden">
             <!-- Header with dark background -->
             <div class="bg-[#333333] py-4 flex justify-center">
                 <img src="assets/images/desi-twist-logo.png" alt="Desi Twist" class="h-16 w-16 object-contain rounded-full">
@@ -162,7 +158,7 @@
         <div class="max-w-7xl mx-auto px-3 py-3 sm:px-4 sm:py-3">
             <div class="flex items-center justify-between gap-3">
                 <!-- Left: Location & Contact -->
-                <div class="flex items-center gap-4 order-2 md:order-1">
+                <div class="flex items-center gap-4 order-2 md:order-1 flex-1 justify-start">
                     <button onclick="openBranchModal()" class="flex items-center gap-2 text-sm font-medium hover:text-wrap-accent transition-all group">
                         <span class="h-8 w-8 bg-gray-900 rounded-full flex items-center justify-center group-hover:bg-wrap-accent transition-all">
                             <i class="fas fa-map-marker-alt text-white text-xs"></i>
@@ -192,7 +188,7 @@
                 </div>
 
                 <!-- Right: Search, Cart & Menu -->
-                <div class="flex items-center gap-3 order-3 md:order-3">
+                <div class="flex items-center gap-3 order-3 md:order-3 flex-1 justify-end">
                     <button onclick="openCart()" class="h-10 w-10 bg-gray-900 rounded-full shadow-sm flex items-center justify-center hover:bg-wrap-accent transition-all relative">
                         <i class="fas fa-shopping-cart text-white text-sm"></i>
                         <span id="cartCount" class="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full shadow-md flex items-center justify-center text-[10px] font-bold text-white">0</span>
@@ -1156,27 +1152,7 @@
         <div class="max-h-[60vh] overflow-y-auto p-2">
             <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-wrap-accent bg-wrap-accent/10" onclick="selectBranch(this)">
                 <i class="fas fa-check-circle text-wrap-accent"></i>
-                <div><strong class="text-sm">Desi Twist DHA Phase 5</strong><span class="text-xs text-gray-500 block">Sector F-1, DHA Phase 5, Islamabad</span></div>
-            </div>
-            <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-transparent" onclick="selectBranch(this)">
-                <i class="fas fa-check-circle text-gray-300"></i>
-                <div><strong class="text-sm">Desi Twist F-11</strong><span class="text-xs text-gray-500 block">Shop # 06, Select One Plaza, F-11 Markaz</span></div>
-            </div>
-            <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-transparent" onclick="selectBranch(this)">
-                <i class="fas fa-check-circle text-gray-300"></i>
-                <div><strong class="text-sm">Desi Twist Blue Area</strong><span class="text-xs text-gray-500 block">Unit No#3, Plot 104E, Blue Area G-7/2</span></div>
-            </div>
-            <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-transparent" onclick="selectBranch(this)">
-                <i class="fas fa-check-circle text-gray-300"></i>
-                <div><strong class="text-sm">Desi Twist Bahria Phase 7</strong><span class="text-xs text-gray-500 block">Plot #68, Theme Park, Bahria Springs</span></div>
-            </div>
-            <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-transparent" onclick="selectBranch(this)">
-                <i class="fas fa-check-circle text-gray-300"></i>
-                <div><strong class="text-sm">Desi Twist Madison Square</strong><span class="text-xs text-gray-500 block">Shop No 1, Madison Square Mall, Saddar</span></div>
-            </div>
-            <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-transparent" onclick="selectBranch(this)">
-                <i class="fas fa-check-circle text-gray-300"></i>
-                <div><strong class="text-sm">Desi Twist AJ Tower</strong><span class="text-xs text-gray-500 block">Shop G-26/G-27, AJ Towers, Gulberg Greens</span></div>
+                <div><strong class="text-sm">Desi Twist DHA Phase 5</strong><span class="text-xs text-gray-500 block">Sector F, F-1, DHA Phase 5, Islamabad</span></div>
             </div>
         </div>
     </div>
@@ -1672,16 +1648,6 @@
             }, 300);
         }
 
-        function forceCloseLocationModal() {
-            const modal = document.getElementById('locationModal');
-            modal.style.opacity = '0';
-            modal.style.transition = 'opacity 0.3s ease';
-            setTimeout(() => {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }, 300);
-        }
-
         // Show modal on page load
         document.addEventListener('DOMContentLoaded', function() {
             // Hide loading screen after 800ms
@@ -1711,7 +1677,12 @@
                 document.getElementById('citySelect').value = savedCity;
                 updateLocationSelect();
                 document.getElementById('locationSelect').value = savedLocation;
-                document.getElementById('headerLocation').textContent = savedLocation + ', ' + (savedCity === 'dha5' ? 'DHA Phase 5' : 'DHA Phase 2');
+                const cityNames = {
+                    'dha5': 'DHA Phase 5',
+                    'dha2': 'DHA Phase 2'
+                };
+                const cityLabel = cityNames[savedCity] || savedCity;
+                document.getElementById('headerLocation').textContent = savedLocation + ', ' + cityLabel;
                 checkSelections();
             }
             
