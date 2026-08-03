@@ -81,8 +81,12 @@
     </div>
 
     <!-- Location Selection Popup Modal -->
-    <div id="locationModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm py-[15px]" style="display: none;">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden">
+    <div id="locationModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm py-[15px]" style="display: none;" onclick="if(event.target===this)forceCloseLocationModal()">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden relative">
+            <!-- Close Button -->
+            <button onclick="forceCloseLocationModal()" class="absolute top-3 right-3 z-10 h-8 w-8 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center transition-all">
+                <i class="fas fa-times text-white text-sm"></i>
+            </button>
             <!-- Header with dark background -->
             <div class="bg-[#333333] py-4 flex justify-center">
                 <img src="assets/images/desi-twist-logo.png" alt="Desi Twist" class="h-16 w-16 object-contain rounded-full">
@@ -1514,10 +1518,15 @@
             document.getElementById('branchOverlay').classList.remove('opacity-0', 'invisible');
             document.getElementById('branchModal').classList.remove('scale-95', 'opacity-0', 'invisible');
             document.getElementById('branchModal').style.transform = 'translate(-50%, -50%) scale(1)';
+            document.getElementById('branchModal').style.opacity = '1';
         }
         function closeBranchModal() {
             document.getElementById('branchOverlay').classList.add('opacity-0', 'invisible');
+            document.getElementById('branchModal').style.opacity = '0';
             document.getElementById('branchModal').style.transform = 'translate(-50%, -50%) scale(0.95)';
+            setTimeout(() => {
+                document.getElementById('branchModal').classList.add('invisible');
+            }, 300);
         }
         function selectBranch(el) {
             document.querySelectorAll('#branchModal > div:last-child > div').forEach(i => {
@@ -1622,6 +1631,9 @@
                         updateLocationSelect();
                         document.getElementById('locationSelect').value = 'Sector F';
                         selectedLocation = 'Sector F';
+                        selectedCity = 'dha5';
+                        localStorage.setItem('dt_city', 'dha5');
+                        localStorage.setItem('dt_location', 'Sector F');
                         checkSelections();
                         showToast('Default location set. Please adjust if needed.');
                     },
@@ -1642,6 +1654,12 @@
                 modal.style.display = 'none';
                 document.body.style.overflow = 'auto';
                 
+                // Save to localStorage
+                if (selectedLocation && selectedCity) {
+                    localStorage.setItem('dt_city', selectedCity);
+                    localStorage.setItem('dt_location', selectedLocation);
+                }
+                
                 // Update header location text
                 if (selectedLocation && selectedCity) {
                     const cityNames = {
@@ -1651,6 +1669,16 @@
                     const cityLabel = cityNames[selectedCity] || selectedCity;
                     document.getElementById('headerLocation').textContent = selectedLocation + ', ' + cityLabel;
                 }
+            }, 300);
+        }
+
+        function forceCloseLocationModal() {
+            const modal = document.getElementById('locationModal');
+            modal.style.opacity = '0';
+            modal.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
             }, 300);
         }
 
@@ -1668,9 +1696,24 @@
             }
 
             const modal = document.getElementById('locationModal');
+            const savedCity = localStorage.getItem('dt_city');
+            const savedLocation = localStorage.getItem('dt_location');
+            
+            // Always show modal
             modal.style.display = 'flex';
             modal.style.opacity = '1';
             document.body.style.overflow = 'hidden';
+            
+            // If saved location exists, pre-select it
+            if (savedCity && savedLocation) {
+                selectedCity = savedCity;
+                selectedLocation = savedLocation;
+                document.getElementById('citySelect').value = savedCity;
+                updateLocationSelect();
+                document.getElementById('locationSelect').value = savedLocation;
+                document.getElementById('headerLocation').textContent = savedLocation + ', ' + (savedCity === 'dha5' ? 'DHA Phase 5' : 'DHA Phase 2');
+                checkSelections();
+            }
             
             // Initialize category highlighting
             setTimeout(() => {
