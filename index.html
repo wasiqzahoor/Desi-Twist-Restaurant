@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desi Twist - Order Authentic Wraps & Shawarma Online!</title>
+    <meta name="description" content="Order online from Desi Twist in Islamabad. Try our mouth-watering Wraps, Shawarma, Mandi, and more. Free delivery on all orders!">
+    <meta name="theme-color" content="#333333">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="preconnect" href="https://assets.indolj.io" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="shortcut icon" href="https://assets.indolj.io/upload/favicons/_faviconCiOnearzbmfR7oTB.png">
+    <link rel="icon" href="https://assets.indolj.io/upload/favicons/_faviconCiOnearzbmfR7oTB.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'wrap-primary': '#333333',
+                        'wrap-accent': '#e75403',
+                        'wrap-yellow': '#e75403',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: "Poppins", sans-serif !important;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .shimmer {
+            background: linear-gradient(90deg, #f0f0f0 0%, #f8f8f8 20%, #f0f0f0 40%, #f0f0f0 100%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite linear;
+        }
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .category-scroll::-webkit-scrollbar { display: none; }
+        .category-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        .products-scroll::-webkit-scrollbar { display: none; }
+        .products-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+        .toast { animation: slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards; }
+        @keyframes slideIn { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50 flex flex-col font-poppins">
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen" class="fixed inset-0 z-[9999] flex items-center justify-center transition-opacity duration-500">
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-md"></div>
+        <div class="relative z-10 flex flex-col items-center">
+            <img src="assets/images/logo.png" alt="Desi Twist" class="h-24 w-24 object-contain">
+            <p class="text-white font-semibold text-lg mt-6 tracking-wide">Desi Twist</p>
+            <div class="mt-4 flex gap-1">
+                <div class="w-2 h-2 bg-wrap-accent rounded-full animate-bounce" style="animation-delay: 0s;"></div>
+                <div class="w-2 h-2 bg-wrap-accent rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                <div class="w-2 h-2 bg-wrap-accent rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Location Selection Popup Modal -->
+    <div id="locationModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm py-[15px]" style="display: none;">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden">
+            <!-- Header with dark background -->
+            <div class="bg-[#333333] py-4 flex justify-center">
+                <img src="assets/images/desi-twist-logo.png" alt="Desi Twist" class="h-16 w-16 object-contain rounded-full">
+            </div>
+            
+            <!-- Content -->
+            <div class="p-5">
+                <h3 class="text-center text-gray-700 font-medium text-lg mb-3">Select Your Order Type</h3>
+                
+                <!-- Order Type Toggle -->
+                <div class="flex justify-center mb-4">
+                    <div class="bg-gray-100 rounded-full p-1 flex">
+                        <button onclick="selectOrderType('delivery')" id="deliveryBtn" class="order-type-btn px-6 py-2 rounded-full text-sm font-semibold transition-all bg-gray-900 text-white">
+                            Delivery
+                        </button>
+                        <button onclick="selectOrderType('pickup')" id="pickupBtn" class="order-type-btn px-6 py-2 rounded-full text-sm font-semibold transition-all text-gray-600">
+                            Pick-Up
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Location Text -->
+                <p class="text-center text-gray-500 text-sm mb-2">Please select your location</p>
+                
+                <!-- Use Current Location Button -->
+                <div class="flex justify-center mb-4">
+                    <button onclick="useCurrentLocation()" class="flex items-center gap-2 px-4 py-2 border-2 border-gray-200 rounded-full text-sm font-medium text-gray-700 hover:border-wrap-accent transition-all">
+                        <i class="fas fa-crosshairs text-gray-500"></i>
+                        Use Current Location
+                    </button>
+                </div>
+
+                <!-- City Selection -->
+                <div class="mb-3">
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Please Select City</label>
+                    <select id="citySelect" onchange="updateLocationSelect()" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-gray-700 focus:border-wrap-accent focus:outline-none transition-all appearance-none bg-white">
+                        <option value="">Select City</option>
+                        <option value="dha5">DHA Phase 5, Islamabad</option>
+                        <option value="dha2">DHA Phase 2, Islamabad</option>
+                    </select>
+                </div>
+
+                <!-- Location Selection -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1.5">Please select your location</label>
+                    <select id="locationSelect" onchange="checkSelections()" class="w-full px-4 py-2.5 border-2 border-gray-200 rounded-xl text-gray-700 focus:border-wrap-accent focus:outline-none transition-all appearance-none bg-white" disabled>
+                        <option value="">Select location first</option>
+                    </select>
+                </div>
+
+                <!-- Continue Button -->
+                <button id="continueBtn" onclick="closeLocationModal()" disabled class="w-full py-3 bg-gray-900 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-800">
+                    Select
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Announcement Bar -->
+    <div class="w-full bg-black/80 backdrop-blur-sm border-b border-gray-200/50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-3 py-2.5">
+            <div class="flex items-center justify-center gap-2">
+                <span class="text-sm font-medium text-white">Free Delivery on All Orders! | Open: 11:00 AM - 1:45 AM</span>
+                <button onclick="this.parentElement.parentElement.parentElement.style.display='none'" class="text-gray-400 hover:text-gray-600 ml-2">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav id="mainNav" class="w-full bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100 sticky top-0 z-50 transition-transform duration-300">
+        <div class="max-w-7xl mx-auto px-3 py-3 sm:px-4 sm:py-3">
+            <div class="flex items-center justify-between gap-3">
+                <!-- Left: Location & Contact -->
+                <div class="flex items-center gap-4 order-2 md:order-1">
+                    <button onclick="openBranchModal()" class="flex items-center gap-2 text-sm font-medium hover:text-wrap-accent transition-all group">
+                        <span class="h-8 w-8 bg-gray-900 rounded-full flex items-center justify-center group-hover:bg-wrap-accent transition-all">
+                            <i class="fas fa-map-marker-alt text-white text-xs"></i>
+                        </span>
+                        <div class="text-left">
+                            <span class="text-xs text-gray-500 block leading-tight">Change Location</span>
+                            <span id="headerLocation" class="text-gray-800 font-semibold">Sector F, DHA Phase 5</span>
+                        </div>
+                    </button>
+                    <div class="hidden sm:block h-8 w-px bg-gray-200"></div>
+                    <a href="tel:03029464542" class="hidden sm:flex items-center gap-2 text-sm font-medium hover:text-wrap-accent transition-all group">
+                        <span class="h-8 w-8 bg-gray-900 rounded-full flex items-center justify-center group-hover:bg-wrap-accent transition-all">
+                            <i class="fas fa-phone text-white text-xs"></i>
+                        </span>
+                        <div class="text-left">
+                            <span class="text-xs text-gray-500 block leading-tight">Contact Us</span>
+                            <span class="text-gray-800 font-semibold">03029464542</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Center: Logo -->
+                <div class="order-1 md:order-2">
+                    <a href="/">
+                        <img src="assets/images/desi-twist-logo.png" alt="Desi Twist" class="h-10 sm:h-12 w-auto object-contain">
+                    </a>
+                </div>
+
+                <!-- Right: Search, Cart & Menu -->
+                <div class="flex items-center gap-3 order-3 md:order-3">
+                    <button onclick="openCart()" class="h-10 w-10 bg-gray-900 rounded-full shadow-sm flex items-center justify-center hover:bg-wrap-accent transition-all relative">
+                        <i class="fas fa-shopping-cart text-white text-sm"></i>
+                        <span id="cartCount" class="absolute -top-1 -right-1 h-5 w-5 bg-red-500 rounded-full shadow-md flex items-center justify-center text-[10px] font-bold text-white">0</span>
+                    </button>
+                    <button onclick="openMobileMenu()" class="h-10 w-10 flex items-center justify-center hover:text-wrap-accent transition-all">
+                        <i class="fas fa-bars text-gray-700 text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Carousel -->
+    <div class="w-full bg-gradient-to-b from-gray-50 to-white mt-5">
+        <div class="max-w-7xl mx-auto relative px-3 sm:px-4">
+            <div class="w-full h-72 sm:h-96 md:h-[28rem] relative overflow-hidden rounded-2xl shadow-lg" id="carouselContainer">
+                <div class="flex transition-transform duration-500 ease-in-out h-full" id="heroCarousel">
+                    <div class="min-w-full h-full flex-shrink-0">
+                        <img src="assets/images/HeroBanner.png" alt="Free Delivery" class="w-full h-full object-cover">
+                    </div>
+                    <div class="min-w-full h-full flex-shrink-0">
+                        <img src="assets/images/HeroBanner2.png" alt="Now Open" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <!-- Gradient Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent"></div>
+                <!-- Navigation Arrows -->
+                <button onclick="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 h-12 w-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-all">
+                    <i class="fas fa-chevron-left text-gray-600"></i>
+                </button>
+                <button onclick="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 h-12 w-12 bg-white/90 backdrop-blur-sm rounded-full shadow-lg flex items-center justify-center hover:bg-white transition-all">
+                    <i class="fas fa-chevron-right text-gray-600"></i>
+                </button>
+                <!-- Dots -->
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2.5">
+                    <button onclick="goToSlide(0)" class="h-2.5 w-8 bg-white/90 rounded-full shadow-md dot-btn active" data-slide="0"></button>
+                    <button onclick="goToSlide(1)" class="h-2.5 w-2.5 rounded-full bg-white/60 shadow-sm dot-btn" data-slide="1"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Navbar -->
+    <div id="categoryNav" class="w-full bg-white border-b border-gray-100 sticky top-0 z-[60] shadow-sm transition-all duration-300 hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="category-scroll flex items-center justify-center gap-1 px-3 py-3 overflow-x-auto">
+                <button onclick="filterMenu('deals', this)" class="cat-btn active flex items-center gap-2 px-5 py-2.5 bg-gray-900 text-white rounded-full text-sm font-semibold whitespace-nowrap transition-all">
+                    <span>DEALS</span>
+                </button>
+                <button onclick="filterMenu('shawarma', this)" class="cat-btn flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-100 transition-all">
+                    <span>SHAWARMA PLATTERS</span>
+                </button>
+                <button onclick="filterMenu('wraps', this)" class="cat-btn flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-100 transition-all">
+                    <span>CRISPY CHICKEN WRAPS</span>
+                </button>
+                <button onclick="filterMenu('ricebowls', this)" class="cat-btn flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-100 transition-all">
+                    <span>RICE BOWLS</span>
+                </button>
+                <button onclick="filterMenu('shawarmas', this)" class="cat-btn flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-100 transition-all">
+                    <span>Shawarmas</span>
+                </button>
+                <button onclick="filterMenu('mandi', this)" class="cat-btn flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-100 transition-all">
+                    <span>Mandi</span>
+                </button>
+                <button onclick="filterMenu('sides', this)" class="cat-btn flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-100 transition-all">
+                    <span>SIDES</span>
+                </button>
+                <button onclick="filterMenu('desserts', this)" class="cat-btn flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-100 transition-all">
+                    <span>DESSERTS</span>
+                </button>
+                <button onclick="filterMenu('addons', this)" class="cat-btn flex items-center gap-2 px-5 py-2.5 bg-white text-gray-700 rounded-full text-sm font-medium whitespace-nowrap hover:bg-gray-100 transition-all">
+                    <span>ADD-ONS</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Quick Access Section -->
+    <div id="categoryQuickAccess" class="w-full bg-white py-6">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4">
+            <!-- Categories Grid -->
+            <div class="flex justify-center gap-3 sm:gap-4 overflow-x-auto pb-4 category-scroll">
+                <button onclick="scrollToCategory('deals', event)" class="category-item flex flex-col items-center gap-2 min-w-[80px] sm:min-w-[100px] p-2 rounded-2xl hover:bg-gray-100 transition-all active">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-100 shadow-md">
+                        <img src="https://assets.indolj.io/upload/1725199104-1.png?q=10" alt="Deals" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] sm:text-xs font-semibold text-center text-gray-700 leading-tight">DEALS</span>
+                </button>
+                <button onclick="scrollToCategory('shawarma', event)" class="category-item flex flex-col items-center gap-2 min-w-[80px] sm:min-w-[100px] p-2 rounded-2xl hover:bg-gray-100 transition-all">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-100 shadow-md">
+                        <img src="https://assets.indolj.io/upload/1779275223-12.png?q=10" alt="Shawarma Platters" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] sm:text-xs font-semibold text-center text-gray-700 leading-tight">SHAWARMA<br>PLATTERS</span>
+                </button>
+                <button onclick="scrollToCategory('wraps', event)" class="category-item flex flex-col items-center gap-2 min-w-[80px] sm:min-w-[100px] p-2 rounded-2xl hover:bg-gray-100 transition-all">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-100 shadow-md">
+                        <img src="https://assets.indolj.io/upload/1779275015-11.png?q=10" alt="Crispy Chicken Wraps" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] sm:text-xs font-semibold text-center text-gray-700 leading-tight">CRISPY<br>CHICKEN<br>WRAPS</span>
+                </button>
+                <button onclick="scrollToCategory('ricebowls', event)" class="category-item flex flex-col items-center gap-2 min-w-[80px] sm:min-w-[100px] p-2 rounded-2xl hover:bg-gray-100 transition-all">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-100 shadow-md">
+                        <img src="https://assets.indolj.io/upload/1779274997-10.png?q=10" alt="Rice Bowls" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] sm:text-xs font-semibold text-center text-gray-700 leading-tight">RICE<br>BOWLS</span>
+                </button>
+                <button onclick="scrollToCategory('shawarmas', event)" class="category-item flex flex-col items-center gap-2 min-w-[80px] sm:min-w-[100px] p-2 rounded-2xl hover:bg-gray-100 transition-all">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-100 shadow-md">
+                        <img src="https://assets.indolj.io/upload/1779275158-15.png?q=10" alt="Shawarmas" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] sm:text-xs font-semibold text-center text-gray-700 leading-tight">Shawarmas</span>
+                </button>
+                <button onclick="scrollToCategory('mandi', event)" class="category-item flex flex-col items-center gap-2 min-w-[80px] sm:min-w-[100px] p-2 rounded-2xl hover:bg-gray-100 transition-all">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-100 shadow-md">
+                        <img src="https://assets.indolj.io/upload/1744367429-1725205901-Untitled-(1000-x-1000-px)-(2).webp?q=10" alt="Mandi" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] sm:text-xs font-semibold text-center text-gray-700 leading-tight">Mandi</span>
+                </button>
+                <button onclick="scrollToCategory('sides', event)" class="category-item flex flex-col items-center gap-2 min-w-[80px] sm:min-w-[100px] p-2 rounded-2xl hover:bg-gray-100 transition-all">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-100 shadow-md">
+                        <img src="https://assets.indolj.io/upload/1779273269-Mutton-Mandi-1080-x-1350-psd--2-.png?q=10" alt="Sides" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] sm:text-xs font-semibold text-center text-gray-700 leading-tight">SIDES</span>
+                </button>
+                <button onclick="scrollToCategory('desserts', event)" class="category-item flex flex-col items-center gap-2 min-w-[80px] sm:min-w-[100px] p-2 rounded-2xl hover:bg-gray-100 transition-all">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-100 shadow-md">
+                        <img src="https://assets.indolj.io/upload/1779275068-14.png?q=10" alt="Sweet Dishes" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] sm:text-xs font-semibold text-center text-gray-700 leading-tight">SWEET<br>DISHES</span>
+                </button>
+                <button onclick="scrollToCategory('addons', event)" class="category-item flex flex-col items-center gap-2 min-w-[80px] sm:min-w-[100px] p-2 rounded-2xl hover:bg-gray-100 transition-all">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-gray-100 shadow-md">
+                        <img src="https://assets.indolj.io/upload/1725121202-19.png?q=10" alt="Add Ons" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-[10px] sm:text-xs font-semibold text-center text-gray-700 leading-tight">ADD ONS</span>
+                </button>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="mt-4 relative">
+                <div class="flex items-center bg-white border-2 border-gray-200 rounded-full overflow-hidden focus-within:border-wrap-accent transition-all">
+                    <i class="fas fa-search text-gray-400 ml-5"></i>
+                    <input type="text" id="heroSearch" placeholder="Search for items..." oninput="searchItems(this.value, 'heroSearch', 'heroResults')" class="flex-1 px-4 py-3.5 outline-none text-sm font-medium text-gray-700 placeholder-gray-400 bg-transparent">
+                    <button class="h-10 w-10 bg-gray-900 text-white rounded-full flex items-center justify-center mr-1.5 hover:bg-gray-800 transition-all">
+                        <i class="fas fa-arrow-right text-sm"></i>
+                    </button>
+                </div>
+                <!-- Search Results Dropdown -->
+                <div id="heroResults" class="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 max-h-80 overflow-y-auto hidden z-50">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-4 py-6 space-y-6">
+
+        <!-- HOT DEALS Section -->
+        <section class="menu-section" data-category="deals">
+            <!-- Banner -->
+            <div class="relative rounded-2xl overflow-hidden mb-6 shadow-lg">
+                <img src="https://assets.indolj.io/upload/1782732458-Hot-Deals.webp?q=10" alt="Hot Deals" class="w-full h-auto object-cover">
+            </div>
+            <!-- Product Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Card 1: Deal 1 (Popular) -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-visible hover:shadow-lg transition-all border border-gray-100 relative">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#e75403] text-white text-xs font-bold px-4 py-1 rounded-full z-10 shadow-md">Popular</div>
+                    <div class="flex items-start gap-4 p-5 pt-4">
+                        <div class="w-24 h-24 flex-shrink-0 bg-white rounded-xl overflow-hidden">
+                            <img src="https://assets.indolj.io/upload/1752525724-xtra%20Chicken.jpg.png" alt="Deal 1" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 text-base">Deal 1</h3>
+                            <p class="text-sm text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">1 Al-Sham Shawarma, your choice of any 1 drink, and crispy fries.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between px-5 pb-5 pt-0">
+                        <div>
+                            <span class="text-gray-400 line-through text-sm">Rs. 1,625</span>
+                            <span class="text-xl font-bold text-gray-900 ml-2">Rs. 1,218</span>
+                        </div>
+                        <button onclick="addToCart('Deal 1', 1218)" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition-all">Add</button>
+                    </div>
+                </div>
+
+                <!-- Card 2: Chicken Bowl Combo -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-all border border-gray-100">
+                    <div class="flex items-start gap-4 p-5">
+                        <div class="w-24 h-24 flex-shrink-0 bg-white rounded-xl overflow-hidden">
+                            <img src="https://assets.indolj.io/upload/1751888085-Untitled-design-(3).png" alt="Chicken Bowl Combo" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 text-base">Chicken Bowl Combo</h3>
+                            <p class="text-sm text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">1 Crispy Chicken Rice Bowl, 1 Lemonade, 1 Fries</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between px-5 pb-5 pt-0">
+                        <div>
+                            <span class="text-gray-400 line-through text-sm">Rs. 1,430</span>
+                            <span class="text-xl font-bold text-gray-900 ml-2">Rs. 1,072</span>
+                        </div>
+                        <button onclick="addToCart('Chicken Bowl Combo', 1072)" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition-all">Add</button>
+                    </div>
+                </div>
+
+                <!-- Card 3: All Wrap Box -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-all border border-gray-100">
+                    <div class="flex items-start gap-4 p-5">
+                        <div class="w-24 h-24 flex-shrink-0 bg-white rounded-xl overflow-hidden relative">
+                            <img src="https://assets.indolj.io/upload/1751885963-24.png" alt="All Wrap Box" class="w-full h-full object-cover">
+                            <div class="absolute bottom-1 left-1 h-5 w-5 bg-gray-900 text-white rounded-full flex items-center justify-center text-[10px] font-bold">
+                                <i class="fas fa-users text-[8px]"></i> 4
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 text-base">All Wrap Box</h3>
+                            <p class="text-sm text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">Choose any 4 wraps with 2 Chipotle dips and a 1.5 Ltr drink.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between px-5 pb-5 pt-0">
+                        <span class="text-xl font-bold text-gray-900">Rs. 3,499</span>
+                        <button onclick="addToCart('All Wrap Box', 3499)" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition-all">Add</button>
+                    </div>
+                </div>
+
+                <!-- Card 4: Family Platter Deal -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-visible hover:shadow-lg transition-all border border-gray-100 relative">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#e75403] text-white text-xs font-bold px-4 py-1 rounded-full z-10 shadow-md">Best Value</div>
+                    <div class="flex items-start gap-4 p-5 pt-4">
+                        <div class="w-24 h-24 flex-shrink-0 bg-white rounded-xl overflow-hidden">
+                            <img src="https://assets.indolj.io/upload/1752525724-xtra%20Chicken.jpg.png" alt="Family Platter Deal" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 text-base">Family Platter Deal</h3>
+                            <p class="text-sm text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">4 Al-Arab Shawarmas with fries, extra chicken, 2 dips, and a 1.5L drink.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between px-5 pb-5 pt-0">
+                        <div>
+                            <span class="text-gray-400 line-through text-sm">Rs. 4,200</span>
+                            <span class="text-xl font-bold text-gray-900 ml-2">Rs. 3,649</span>
+                        </div>
+                        <button onclick="addToCart('Family Platter Deal', 3649)" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition-all">Add</button>
+                    </div>
+                </div>
+
+                <!-- Card 5: Mandi Feast -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-all border border-gray-100">
+                    <div class="flex items-start gap-4 p-5">
+                        <div class="w-24 h-24 flex-shrink-0 bg-white rounded-xl overflow-hidden">
+                            <img src="https://assets.indolj.io/upload/1751888085-Untitled-design-(3).png" alt="Mandi Feast" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 text-base">Mandi Feast</h3>
+                            <p class="text-sm text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">Chicken Mandi with 2 drinks and a side of hummus.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between px-5 pb-5 pt-0">
+                        <div>
+                            <span class="text-gray-400 line-through text-sm">Rs. 1,500</span>
+                            <span class="text-xl font-bold text-gray-900 ml-2">Rs. 1,299</span>
+                        </div>
+                        <button onclick="addToCart('Mandi Feast', 1299)" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition-all">Add</button>
+                    </div>
+                </div>
+
+                <!-- Card 6: Loaded Fries Combo -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-all border border-gray-100">
+                    <div class="flex items-start gap-4 p-5">
+                        <div class="w-24 h-24 flex-shrink-0 bg-white rounded-xl overflow-hidden">
+                            <img src="https://assets.indolj.io/upload/1751888182-Untitled-design-(2).png" alt="Loaded Fries Combo" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 text-base">Loaded Fries Combo</h3>
+                            <p class="text-sm text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">Loaded Fries with 1 drink and 1 Shawarma.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between px-5 pb-5 pt-0">
+                        <div>
+                            <span class="text-gray-400 line-through text-sm">Rs. 1,200</span>
+                            <span class="text-xl font-bold text-gray-900 ml-2">Rs. 999</span>
+                        </div>
+                        <button onclick="addToCart('Loaded Fries Combo', 999)" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition-all">Add</button>
+                    </div>
+                </div>
+
+                <!-- Card 7: Double Wrap Deal -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-all border border-gray-100">
+                    <div class="flex items-start gap-4 p-5">
+                        <div class="w-24 h-24 flex-shrink-0 bg-white rounded-xl overflow-hidden relative">
+                            <img src="https://assets.indolj.io/upload/1751885963-24.png" alt="Double Wrap Deal" class="w-full h-full object-cover">
+                            <div class="absolute bottom-1 left-1 h-5 w-5 bg-gray-900 text-white rounded-full flex items-center justify-center text-[10px] font-bold">
+                                <i class="fas fa-users text-[8px]"></i> 2
+                            </div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 text-base">Double Wrap Deal</h3>
+                            <p class="text-sm text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">2 Wraps of your choice with 2 drinks and fries.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between px-5 pb-5 pt-0">
+                        <div>
+                            <span class="text-gray-400 line-through text-sm">Rs. 1,800</span>
+                            <span class="text-xl font-bold text-gray-900 ml-2">Rs. 1,499</span>
+                        </div>
+                        <button onclick="addToCart('Double Wrap Deal', 1499)" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition-all">Add</button>
+                    </div>
+                </div>
+
+                <!-- Card 8: Shawarma Rice Combo -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-visible hover:shadow-lg transition-all border border-gray-100 relative">
+                    <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#e75403] text-white text-xs font-bold px-4 py-1 rounded-full z-10 shadow-md">New</div>
+                    <div class="flex items-start gap-4 p-5 pt-4">
+                        <div class="w-24 h-24 flex-shrink-0 bg-white rounded-xl overflow-hidden">
+                            <img src="https://assets.indolj.io/upload/1752525724-xtra%20Chicken.jpg.png" alt="Shawarma Rice Combo" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 text-base">Shawarma Rice Combo</h3>
+                            <p class="text-sm text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">Shawarma Chicken Rice Bowl with 1 drink and hummus.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between px-5 pb-5 pt-0">
+                        <div>
+                            <span class="text-gray-400 line-through text-sm">Rs. 1,100</span>
+                            <span class="text-xl font-bold text-gray-900 ml-2">Rs. 899</span>
+                        </div>
+                        <button onclick="addToCart('Shawarma Rice Combo', 899)" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition-all">Add</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SHAWARMA PLATTERS Section -->
+        <section class="menu-section" data-category="shawarma">
+            <div class="relative rounded-2xl overflow-hidden mb-6 shadow-lg">
+                <img src="https://assets.indolj.io/upload/1782734737-Al-Arab-Shawarma.webp?q=10" alt="Shawarma Platters" class="w-full h-auto object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Al-Sham Platter -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1744719879-al-sham-platter-web-item.png?q=10" alt="Al-Sham Platter" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Al-Sham Platter', 3499)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Al-Sham Platter</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">3 Al-Sham Shawarmas, 2 dips, 1 vegetable dip, crispy fries, extra chicken, and a 1.5L drink. Delivered fresh and warm.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 3,499</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Al-Sham Platter -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1747054508-1739637654-Single-Shawarma-platter.webp?q=10" alt="Single Al-Sham Platter" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Single Al-Sham Platter', 1399)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Single Al-Sham Platter</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Al-Sham shawarma with extra chicken, fries, chipotle dip, and 1 drink. Delivered fresh & warm.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 1,399</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Shawarma Platter -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all relative">
+                    <div class="absolute top-3 left-3 bg-yellow-400 text-gray-900 text-[10px] font-bold px-3 py-1 rounded-full z-10">MOST FAVOURITE</div>
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1752526823-Untitled-design-(1).png?q=10" alt="Single Shawarma Platter" class="w-full h-64 object-contain">
+                        <div class="absolute bottom-3 left-3 flex items-center gap-1 bg-white/80 backdrop-blur-sm rounded-full px-2 py-1">
+                            <i class="fas fa-users text-gray-600 text-xs"></i>
+                            <span class="text-xs text-gray-600 font-medium">1</span>
+                        </div>
+                        <button onclick="addToCart('Single Shawarma Platter', 1199)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Single Shawarma Platter</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Al-Arab Shawarma with extra chicken, fries, chipotle dip, and 1 drink. Delivered fresh & warm.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 1,199</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Family Platter -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1739637729-Shawarma-platter-for-4.png?q=10" alt="Family Platter" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Family Platter', 3649)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Family Platter</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">4 Al-Arab Shawarmas with fries, extra chicken, 2 dips, and a 1.5L drink. Perfect for sharing.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 3,649</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIGNATURE WRAPS Section -->
+        <section class="menu-section" data-category="wraps">
+            <div class="relative rounded-2xl overflow-hidden mb-6 shadow-lg">
+                <img src="https://assets.indolj.io/upload/1782732760-Wraps.webp?q=10" alt="Signature Wraps" class="w-full h-auto object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Mexican Wrap -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751885244-21.png?q=10" alt="Mexican Wrap" class="w-full h-64 object-contain">
+                        <div class="absolute bottom-3 left-3 flex items-center gap-1 bg-white/80 backdrop-blur-sm rounded-full px-2 py-1">
+                            <i class="fas fa-users text-gray-600 text-xs"></i>
+                            <span class="text-xs text-gray-600 font-medium">1</span>
+                        </div>
+                        <button onclick="addToCart('Mexican Wrap', 749)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Mexican Wrap</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Our signature crispy chicken fillet with sweet and spicy sauce, wrapped in a fresh tortilla. Delivered fresh & warm.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 749</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Jalapeno Wrap -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all relative">
+                    <div class="absolute top-3 left-3 bg-yellow-400 text-gray-900 text-[10px] font-bold px-3 py-1 rounded-full z-10">HOT SELLING</div>
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1783357412-1751885545-22.png?q=10" alt="Jalapeno Wrap" class="w-full h-64 object-contain">
+                        <div class="absolute bottom-3 left-3 flex items-center gap-1 bg-white/80 backdrop-blur-sm rounded-full px-2 py-1">
+                            <i class="fas fa-users text-gray-600 text-xs"></i>
+                            <span class="text-xs text-gray-600 font-medium">1</span>
+                        </div>
+                        <button onclick="addToCart('Jalapeno Wrap', 749)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Jalapeno Wrap</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Our signature crispy chicken fillet with fresh tangy jalapeno sauce wrapped in fresh tortilla. Delivered fresh & warm.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 749</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Texas BBQ Wrap -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751885622-20.png?q=10" alt="Texas BBQ Wrap" class="w-full h-64 object-contain">
+                        <div class="absolute bottom-3 left-3 flex items-center gap-1 bg-white/80 backdrop-blur-sm rounded-full px-2 py-1">
+                            <i class="fas fa-users text-gray-600 text-xs"></i>
+                            <span class="text-xs text-gray-600 font-medium">1</span>
+                        </div>
+                        <button onclick="addToCart('Texas BBQ Wrap', 749)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Texas BBQ Wrap</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Our signature crispy chicken fillet with Texas BBQ sauce, wrapped in a fresh tortilla. Delivered fresh & warm.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 749</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chipotle Wrap -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1783357350-1751885644-19.png?q=10" alt="Chipotle Wrap" class="w-full h-64 object-contain">
+                        <div class="absolute bottom-3 left-3 flex items-center gap-1 bg-white/80 backdrop-blur-sm rounded-full px-2 py-1">
+                            <i class="fas fa-users text-gray-600 text-xs"></i>
+                            <span class="text-xs text-gray-600 font-medium">1</span>
+                        </div>
+                        <button onclick="addToCart('Chipotle Wrap', 749)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Chipotle Wrap</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Our signature crispy chicken fillet with smoky chipotle sauce, wrapped in a fresh tortilla. Delivered fresh & warm.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 749</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RICE BOWLS Section -->
+        <section class="menu-section" data-category="ricebowls">
+            <div class="relative rounded-2xl overflow-hidden mb-6 shadow-lg">
+                <img src="https://assets.indolj.io/upload/1782732886-Rice-Bowls.webp?q=10" alt="Rice Bowls" class="w-full h-auto object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Shawarma Chicken Rice Bowl -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751883938-15.png?q=10" alt="Shawarma Chicken Rice Bowl" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Shawarma Chicken Rice Bowl', 699)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Shawarma Chicken Rice Bowl</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Tender shawarma chicken over seasoned rice with garlic sauce and fresh veggies.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 699</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Crispy Chicken Rice Bowl -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751883971-18.png?q=10" alt="Crispy Chicken Rice Bowl" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Crispy Chicken Rice Bowl', 699)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Crispy Chicken Rice Bowl</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Crispy fried chicken fillet on a bed of aromatic rice with special sauce.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 699</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SHAWARMAS Section -->
+        <section class="menu-section" data-category="shawarmas">
+            <div class="relative rounded-2xl overflow-hidden mb-6 shadow-lg">
+                <img src="https://assets.indolj.io/upload/1782734402-Shawarmas.webp?q=10" alt="Shawarmas" class="w-full h-auto object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Al-Arab Shawarma -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-all border border-gray-100">
+                    <div class="flex items-start gap-4 p-5">
+                        <div class="w-24 h-24 flex-shrink-0 bg-white rounded-xl overflow-hidden">
+                            <img src="https://assets.indolj.io/upload/1751883306-2.png?q=10" alt="Al-Arab Shawarma" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 text-base">Al-Arab Shawarma</h3>
+                            <p class="text-sm text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">Classic Al-Arab shawarma with fresh veggies, garlic sauce, and secret spices.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between px-5 pb-5 pt-0">
+                        <span class="text-xl font-bold text-gray-900">Rs. 749</span>
+                        <button onclick="addToCart('Al-Arab Shawarma', 749)" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition-all">Add</button>
+                    </div>
+                </div>
+                <!-- Shawarma Al-Sham -->
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-all border border-gray-100">
+                    <div class="flex items-start gap-4 p-5">
+                        <div class="w-24 h-24 flex-shrink-0 bg-white rounded-xl overflow-hidden">
+                            <img src="https://assets.indolj.io/upload/1751883254-1.png?q=10" alt="Shawarma Al-Sham" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <h3 class="font-bold text-gray-900 text-base">Shawarma Al-Sham</h3>
+                            <p class="text-sm text-gray-500 mt-1.5 line-clamp-2 leading-relaxed">Traditional Al-Sham style shawarma with tender chicken and oriental spices.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between px-5 pb-5 pt-0">
+                        <span class="text-xl font-bold text-gray-900">Rs. 749</span>
+                        <button onclick="addToCart('Shawarma Al-Sham', 749)" class="px-5 py-2.5 bg-gray-900 text-white text-sm font-semibold rounded-xl hover:bg-gray-800 transition-all">Add</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MANDI & MADBI Section -->
+        <section class="menu-section" data-category="mandi">
+            <div class="relative rounded-2xl overflow-hidden mb-6 shadow-lg">
+                <img src="https://assets.indolj.io/upload/1782732832-Mandi---Mabdi.webp?q=10" alt="Mandi & Madbi" class="w-full h-auto object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Chicken Mandi -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751899947-7.png?q=10" alt="Chicken Mandi" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Chicken Mandi', 990)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Chicken Mandi</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Aromatic spiced rice with tender chicken, served with raita and salad.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 990</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIDES Section -->
+        <section class="menu-section" data-category="sides">
+            <div class="relative rounded-2xl overflow-hidden mb-6 shadow-lg">
+                <img src="https://assets.indolj.io/upload/1782732984-Wraplab-Specials.webp?q=10" alt="Sides" class="w-full h-auto object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Hummus with Pita Bread -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1739637609-hummus.png?q=10" alt="Hummus with Pita Bread" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Hummus with Pita Bread', 299)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Hummus with Pita Bread</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Creamy hummus served with fresh warm pita bread.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 299</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Hummus with Shawarma Chicken -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751887280-14.png?q=10" alt="Hummus with Shawarma Chicken" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Hummus with Shawarma Chicken', 499)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Hummus with Shawarma Chicken</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Rich hummus topped with tender shawarma chicken pieces.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 499</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Loaded Fries -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751886229-23.png?q=10" alt="Loaded Fries" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Loaded Fries', 749)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Loaded Fries</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Crispy fries loaded with chicken, cheese and special sauces.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 749</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DESSERTS Section -->
+        <section class="menu-section" data-category="desserts">
+            <div class="relative rounded-2xl overflow-hidden mb-6 shadow-lg">
+                <img src="https://assets.indolj.io/upload/1782733037-Desserts.webp?q=10" alt="Desserts" class="w-full h-auto object-cover">
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Chocolate Fudge Cake -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1753016649-Copy%20of%20Copy%20of%20Untitled%20Design%20(600%20x%20600%20px).png?q=10" alt="Chocolate Fudge Cake" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Chocolate Fudge Cake', 650)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Chocolate Fudge Cake</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Rich and moist chocolate fudge cake with velvety ganache.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 650</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Chocolate Milk Cake -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1753027632-Copy%20of%20Copy%20of%20Untitled%20Design%20(600%20x%20600%20px)%20(1).png?q=10" alt="Chocolate Milk Cake" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Chocolate Milk Cake', 600)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Chocolate Milk Cake</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Soft and fluffy milk cake soaked in rich chocolate sauce.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 600</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Baked Cheese Cake -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1752590697-Untitled-design-(4).png?q=10" alt="Baked Cheese Cake" class="w-full h-64 object-contain">
+                        <button onclick="addToCart('Baked Cheese Cake', 550)" class="absolute bottom-3 right-3 h-10 w-10 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-sm hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 text-base uppercase">Baked Cheese Cake</h3>
+                        <p class="text-sm text-gray-500 mt-1.5 line-clamp-2">Creamy baked cheesecake with a buttery graham cracker crust.</p>
+                        <div class="flex items-center justify-between mt-3">
+                            <span class="text-lg font-bold text-gray-900">Rs. 550</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADD-ONS Section -->
+        <section class="menu-section" data-category="addons">
+            <div class="relative rounded-2xl overflow-hidden mb-6 shadow-lg">
+                <img src="https://assets.indolj.io/upload/1782733113-Adds-Ons.webp?q=10" alt="Add-ons" class="w-full h-auto object-cover">
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                <!-- Bread -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751324174-1.png?q=10" alt="Bread" class="w-full h-40 object-contain">
+                        <button onclick="addToCart('Bread', 80)" class="absolute bottom-3 right-3 h-8 w-8 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-xs hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-gray-900 text-sm">Bread</h3>
+                        <span class="text-sm font-bold text-gray-900">Rs. 80</span>
+                    </div>
+                </div>
+                <!-- Lemonade -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751888182-Untitled-design-(2).png?q=10" alt="Lemonade" class="w-full h-40 object-contain">
+                        <button onclick="addToCart('Lemonade', 349)" class="absolute bottom-3 right-3 h-8 w-8 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-xs hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-gray-900 text-sm">Lemonade</h3>
+                        <span class="text-sm font-bold text-gray-900">Rs. 349</span>
+                    </div>
+                </div>
+                <!-- Peach Ice Tea -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751888085-Untitled-design-(3).png?q=10" alt="Peach Ice Tea" class="w-full h-40 object-contain">
+                        <button onclick="addToCart('Peach Ice Tea', 349)" class="absolute bottom-3 right-3 h-8 w-8 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-xs hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-gray-900 text-sm">Peach Ice Tea</h3>
+                        <span class="text-sm font-bold text-gray-900">Rs. 349</span>
+                    </div>
+                </div>
+                <!-- Water -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1752838951-water.webp?q=10" alt="Water" class="w-full h-40 object-contain">
+                        <button onclick="addToCart('Water', 110)" class="absolute bottom-3 right-3 h-8 w-8 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-xs hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-gray-900 text-sm">Water</h3>
+                        <span class="text-sm font-bold text-gray-900">Rs. 110</span>
+                    </div>
+                </div>
+                <!-- (345 ML) Drink -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1734601647-Drinks%20(5).png?q=10" alt="(345 ML) Drink" class="w-full h-40 object-contain">
+                        <button onclick="addToCart('(345 ML) Drink', 180)" class="absolute bottom-3 right-3 h-8 w-8 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-xs hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-gray-900 text-sm">(345 ML) Drink</h3>
+                        <span class="text-sm font-bold text-gray-900">Rs. 180</span>
+                    </div>
+                </div>
+                <!-- Fries -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1752525724-xtra%20Chicken.jpg.png?q=10" alt="Fries" class="w-full h-40 object-contain">
+                        <button onclick="addToCart('Fries', 249)" class="absolute bottom-3 right-3 h-8 w-8 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-xs hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-gray-900 text-sm">Fries</h3>
+                        <span class="text-sm font-bold text-gray-900">Rs. 249</span>
+                    </div>
+                </div>
+                <!-- Extra Shawarma Chicken -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751324207-3.png?q=10" alt="Extra Shawarma Chicken" class="w-full h-40 object-contain">
+                        <button onclick="addToCart('Extra Shawarma Chicken', 400)" class="absolute bottom-3 right-3 h-8 w-8 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-xs hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-gray-900 text-sm">Extra Shawarma Chicken</h3>
+                        <span class="text-sm font-bold text-gray-900">Rs. 400</span>
+                    </div>
+                </div>
+                <!-- 1.5 ltr Drink -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1734601562-Drinks%20(4).png?q=10" alt="1.5 ltr Drink" class="w-full h-40 object-contain">
+                        <button onclick="addToCart('1.5 ltr Drink', 550)" class="absolute bottom-3 right-3 h-8 w-8 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-xs hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-gray-900 text-sm">1.5 ltr Drink</h3>
+                        <span class="text-sm font-bold text-gray-900">Rs. 550</span>
+                    </div>
+                </div>
+                <!-- Extra Dip -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1734599535-Dip%20(1).png?q=10" alt="Extra Dip" class="w-full h-40 object-contain">
+                        <button onclick="addToCart('Extra Dip', 99)" class="absolute bottom-3 right-3 h-8 w-8 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-xs hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-gray-900 text-sm">Extra Dip</h3>
+                        <span class="text-sm font-bold text-gray-900">Rs. 99</span>
+                    </div>
+                </div>
+                <!-- Make It A Meal -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1738051071-1734601723-Make-it-a-Meal-(1).png?q=10" alt="Make It A Meal" class="w-full h-40 object-contain">
+                        <button onclick="addToCart('Make It A Meal', 349)" class="absolute bottom-3 right-3 h-8 w-8 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-xs hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-gray-900 text-sm">Make It A Meal</h3>
+                        <span class="text-sm font-bold text-gray-900">Rs. 349</span>
+                    </div>
+                </div>
+                <!-- Extra Rice -->
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-all">
+                    <div class="relative bg-white p-4">
+                        <img src="https://assets.indolj.io/upload/1751324136-2.png?q=10" alt="Extra Rice" class="w-full h-40 object-contain">
+                        <button onclick="addToCart('Extra Rice', 250)" class="absolute bottom-3 right-3 h-8 w-8 bg-gray-900 text-white rounded-full shadow-lg flex items-center justify-center text-xs hover:bg-gray-800 transition-all">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="p-3">
+                        <h3 class="font-bold text-gray-900 text-sm">Extra Rice</h3>
+                        <span class="text-sm font-bold text-gray-900">Rs. 250</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#2e2e2e] text-white mt-auto">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Brand -->
+                <div>
+                    <img src="assets/images/desi-twist-logo.png" alt="Desi Twist" class="h-16 mb-4 object-contain relative z-10 rounded-full">
+                    <p class="text-sm text-gray-300 leading-relaxed">Get the Best of Desi Twist Delivered to Your Door in Islamabad.</p>
+                    <p class="text-xs text-gray-400 mt-2">Welcome to Desi Twist in Islamabad where we offer authentic Arabic-style dishes. Try our wide range of mouth-watering Wraps, Shawarma, Mandi, Madbi, and more.</p>
+                </div>
+                <!-- Contact -->
+                <div>
+                    <h4 class="font-semibold text-wrap-accent mb-4">Contact Us</h4>
+                    <div class="space-y-3 text-sm text-gray-300">
+                        <p class="flex items-start gap-2"><i class="fas fa-phone text-wrap-accent mt-1"></i> 0302-9464542</p>
+                        <p class="flex items-start gap-2"><i class="fas fa-envelope text-wrap-accent mt-1"></i> desitwist@gmail.com</p>
+                        <p class="flex items-start gap-2"><i class="fas fa-map-marker-alt text-wrap-accent mt-1"></i> Sector F-1 DHA Phase 5, Islamabad, 44000, Pakistan</p>
+                    </div>
+                    <div class="flex gap-3 mt-4">
+                        <a href="https://www.facebook.com/wraplabpk/" target="_blank" class="h-9 w-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-wrap-accent hover:text-wrap-primary transition-all"><i class="fab fa-facebook-f text-sm"></i></a>
+                        <a href="https://www.instagram.com/wraplab.pk/" target="_blank" class="h-9 w-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-wrap-accent hover:text-wrap-primary transition-all"><i class="fab fa-instagram text-sm"></i></a>
+                        <a href="https://www.tiktok.com/@wraplab.pk" target="_blank" class="h-9 w-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-wrap-accent hover:text-wrap-primary transition-all"><i class="fab fa-tiktok text-sm"></i></a>
+                        <a href="https://www.youtube.com/@wraplabisb" target="_blank" class="h-9 w-9 bg-white/10 rounded-full flex items-center justify-center hover:bg-wrap-accent hover:text-wrap-primary transition-all"><i class="fab fa-youtube text-sm"></i></a>
+                    </div>
+                </div>
+                <!-- Links -->
+                <div>
+                    <h4 class="font-semibold text-wrap-accent mb-4">Quick Links</h4>
+                    <div class="space-y-2 text-sm text-gray-300">
+                        <a href="/privacy-policy" class="block hover:text-wrap-accent transition-all">Privacy Policy</a>
+                        <a href="/faqs" class="block hover:text-wrap-accent transition-all">FAQs</a>
+                        <a href="/our_location" class="block hover:text-wrap-accent transition-all">Our Locations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white/10 py-4 text-center text-xs text-gray-500">
+            <p>&copy; 2024 Desi Twist. All Rights Reserved. | Powered by New Tech Softs</p>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black/50 z-[100] opacity-0 invisible transition-all duration-300" onclick="closeCart()"></div>
+    <div id="cartSidebar" class="fixed top-0 right-[-400px] w-[380px] max-w-[90vw] h-full bg-white z-[101] flex flex-col transition-all duration-300 shadow-2xl">
+        <div class="bg-wrap-primary text-white p-5 flex items-center justify-between">
+            <h3 class="font-semibold flex items-center gap-2"><i class="fas fa-shopping-cart text-wrap-accent"></i> Your Cart</h3>
+            <button onclick="closeCart()" class="text-white hover:text-wrap-accent transition-all"><i class="fas fa-times text-lg"></i></button>
+        </div>
+        <div id="cartBody" class="flex-1 overflow-y-auto p-5">
+            <div class="flex flex-col items-center justify-center h-full text-gray-400 text-center">
+                <i class="fas fa-shopping-basket text-5xl mb-4 opacity-50"></i>
+                <p class="font-semibold text-gray-500">Your cart is empty</p>
+            </div>
+        </div>
+        <div id="cartFooter" class="p-5 border-t-2 border-gray-200 bg-gray-50 hidden">
+            <div class="flex justify-between items-center mb-2">
+                <span class="font-semibold">Subtotal</span>
+                <span id="cartTotal" class="text-xl font-bold text-wrap-primary">Rs. 0</span>
+            </div>
+            <p class="text-xs text-gray-500 text-center mb-3">Minimum order: Rs. 600</p>
+            <button onclick="checkoutWhatsApp()" class="w-full py-3 bg-green-500 text-white font-semibold rounded-xl hover:bg-green-600 transition-all flex items-center justify-center gap-2">
+                <i class="fab fa-whatsapp text-lg"></i> Order via WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div id="searchOverlay" class="fixed inset-0 bg-black/60 z-[200] opacity-0 invisible transition-all duration-300" onclick="closeSearch()"></div>
+    <div id="searchModal" class="fixed top-[-100px] left-1/2 -translate-x-1/2 w-[90%] max-w-[500px] bg-white rounded-2xl z-[201] transition-all duration-300 shadow-2xl">
+        <div class="flex items-center justify-between p-4 border-b border-gray-200">
+            <h3 class="font-semibold">Search Menu</h3>
+            <button onclick="closeSearch()" class="h-8 w-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-200"><i class="fas fa-times text-sm"></i></button>
+        </div>
+        
+        <div id="modalResults" class="hidden max-h-[300px] overflow-y-auto border-t border-gray-100"></div>
+    </div>
+
+    <!-- Branch Modal -->
+    <div id="branchOverlay" class="fixed inset-0 bg-black/60 z-[300] opacity-0 invisible transition-all duration-300" onclick="closeBranchModal()"></div>
+    <div id="branchModal" class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 scale-95 w-[90%] max-w-[440px] max-h-[80vh] bg-white rounded-2xl z-[301] opacity-0 invisible transition-all duration-300 overflow-hidden">
+        <div class="flex items-center justify-between p-4 border-b border-gray-200">
+            <h3 class="font-semibold">Select Branch</h3>
+            <button onclick="closeBranchModal()" class="h-8 w-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-600"><i class="fas fa-times text-sm"></i></button>
+        </div>
+        <div class="max-h-[60vh] overflow-y-auto p-2">
+            <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-wrap-accent bg-wrap-accent/10" onclick="selectBranch(this)">
+                <i class="fas fa-check-circle text-wrap-accent"></i>
+                <div><strong class="text-sm">Desi Twist DHA Phase 5</strong><span class="text-xs text-gray-500 block">Sector F-1, DHA Phase 5, Islamabad</span></div>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-transparent" onclick="selectBranch(this)">
+                <i class="fas fa-check-circle text-gray-300"></i>
+                <div><strong class="text-sm">Desi Twist F-11</strong><span class="text-xs text-gray-500 block">Shop # 06, Select One Plaza, F-11 Markaz</span></div>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-transparent" onclick="selectBranch(this)">
+                <i class="fas fa-check-circle text-gray-300"></i>
+                <div><strong class="text-sm">Desi Twist Blue Area</strong><span class="text-xs text-gray-500 block">Unit No#3, Plot 104E, Blue Area G-7/2</span></div>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-transparent" onclick="selectBranch(this)">
+                <i class="fas fa-check-circle text-gray-300"></i>
+                <div><strong class="text-sm">Desi Twist Bahria Phase 7</strong><span class="text-xs text-gray-500 block">Plot #68, Theme Park, Bahria Springs</span></div>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-transparent" onclick="selectBranch(this)">
+                <i class="fas fa-check-circle text-gray-300"></i>
+                <div><strong class="text-sm">Desi Twist Madison Square</strong><span class="text-xs text-gray-500 block">Shop No 1, Madison Square Mall, Saddar</span></div>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-transparent" onclick="selectBranch(this)">
+                <i class="fas fa-check-circle text-gray-300"></i>
+                <div><strong class="text-sm">Desi Twist AJ Tower</strong><span class="text-xs text-gray-500 block">Shop G-26/G-27, AJ Towers, Gulberg Greens</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-[400] opacity-0 invisible transition-all duration-300" onclick="closeMobileMenu()"></div>
+    <div id="mobileMenu" class="fixed top-0 left-[-300px] w-[280px] h-full bg-white z-[401] flex flex-col transition-all duration-300 shadow-2xl">
+        <div class="p-4 border-b border-gray-200 flex items-center justify-between">
+            <img src="assets/images/desi-twist-logo.png" alt="Desi Twist" class="h-10">
+            <button onclick="closeMobileMenu()" class="h-8 w-8 bg-gray-100 rounded-full flex items-center justify-center"><i class="fas fa-times text-gray-600 text-sm"></i></button>
+        </div>
+        <nav class="flex-1 py-2">
+            <a href="/" class="flex items-center gap-3 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"><i class="fas fa-home text-wrap-accent w-5"></i> Home</a>
+            <a href="#menu" class="flex items-center gap-3 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"><i class="fas fa-utensils text-wrap-accent w-5"></i> Our Menu</a>
+            <a href="#locations" class="flex items-center gap-3 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"><i class="fas fa-map-marker-alt text-wrap-accent w-5"></i> Locations</a>
+            <a href="/privacy-policy" class="flex items-center gap-3 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"><i class="fas fa-shield-alt text-wrap-accent w-5"></i> Privacy Policy</a>
+            <a href="/faqs" class="flex items-center gap-3 px-5 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50"><i class="fas fa-question-circle text-wrap-accent w-5"></i> FAQs</a>
+        </nav>
+        <div class="p-4 border-t border-gray-200">
+            <p class="text-sm text-gray-600 flex items-center gap-2 mb-3"><i class="fas fa-phone text-wrap-accent"></i> 0302-9464542</p>
+            <div class="flex gap-2">
+                <a href="https://www.facebook.com/wraplabpk/" target="_blank" class="h-8 w-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-wrap-primary hover:text-white transition-all"><i class="fab fa-facebook-f text-xs"></i></a>
+                <a href="https://www.instagram.com/wraplab.pk/" target="_blank" class="h-8 w-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-wrap-primary hover:text-white transition-all"><i class="fab fa-instagram text-xs"></i></a>
+                <a href="https://www.tiktok.com/@wraplab.pk" target="_blank" class="h-8 w-8 bg-gray-100 rounded-full flex items-center justify-center hover:bg-wrap-primary hover:text-white transition-all"><i class="fab fa-tiktok text-xs"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/923029464542" target="_blank" class="fixed bottom-6 right-6 h-14 w-14 bg-[#25D366] text-white rounded-full shadow-lg flex items-center justify-center text-2xl z-50 hover:scale-110 transition-all hover:shadow-xl">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-20 right-6 bg-wrap-primary text-white px-5 py-3 rounded-xl shadow-xl z-[9999] transform translate-y-5 opacity-0 transition-all duration-300 flex items-center gap-2 text-sm font-medium">
+        <i class="fas fa-check-circle text-wrap-accent"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script>
+        // Cart
+        let cart = [];
+        let currentSlide = 0;
+        const totalSlides = 2;
+
+        // Carousel
+        function updateCarousel() {
+            document.getElementById('heroCarousel').style.transform = `translateX(-${currentSlide * 100}%)`;
+            document.querySelectorAll('.dot-btn').forEach((btn, i) => {
+                btn.className = i === currentSlide ? 'h-2.5 w-8 bg-white/90 rounded-full shadow-md dot-btn' : 'h-2.5 w-2.5 rounded-full bg-white/60 shadow-sm dot-btn';
+            });
+        }
+        function nextSlide() { currentSlide = (currentSlide + 1) % totalSlides; updateCarousel(); }
+        function prevSlide() { currentSlide = (currentSlide - 1 + totalSlides) % totalSlides; updateCarousel(); }
+        function goToSlide(i) { currentSlide = i; updateCarousel(); }
+        setInterval(nextSlide, 4000);
+
+        // Scroll to Category
+        function scrollToCategory(cat, e) {
+            // Update category item styles
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('div').classList.remove('bg-gray-900');
+                item.querySelector('span').classList.remove('text-wrap-accent');
+                item.querySelector('span').classList.add('text-gray-700');
+            });
+            if (e && e.currentTarget) {
+                e.currentTarget.classList.add('active');
+                e.currentTarget.querySelector('div').classList.add('bg-gray-900');
+                e.currentTarget.querySelector('span').classList.remove('text-gray-700');
+                e.currentTarget.querySelector('span').classList.add('text-wrap-accent');
+            }
+
+            // Scroll to category section
+            const section = document.querySelector('[data-category="' + cat + '"]');
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Search Items
+        const allMenuItems = [
+            { name: 'Deal 1', price: 1218, category: 'deals', desc: '1 Al-Sham Shawarma, drink, and fries' },
+            { name: 'Chicken Bowl Combo', price: 1072, category: 'deals', desc: 'Crispy Chicken Rice Bowl, Lemonade, Fries' },
+            { name: 'All Wrap Box', price: 3499, category: 'deals', desc: 'Choose any 4 wraps with dips and drink' },
+            { name: 'Single Shawarma Platter', price: 1199, category: 'shawarma', desc: 'Al-Arab Shawarma with extra chicken' },
+            { name: 'Family Platter', price: 3649, category: 'shawarma', desc: '4 Al-Arab Shawarmas with fries' },
+            { name: 'Mexican Wrap', price: 749, category: 'wraps', desc: 'Crispy chicken with sweet and spicy sauce' },
+            { name: 'Chipotle Wrap', price: 749, category: 'wraps', desc: 'Crispy chicken with chipotle sauce' },
+            { name: 'Jalapeno Wrap', price: 749, category: 'wraps', desc: 'Crispy chicken with jalapeno sauce' },
+            { name: 'Texas BBQ Wrap', price: 749, category: 'wraps', desc: 'Crispy chicken with Texas BBQ sauce' },
+            { name: 'Shawarma Chicken Rice Bowl', price: 699, category: 'ricebowls', desc: 'Tender shawarma chicken over seasoned rice with garlic sauce and fresh veggies' },
+            { name: 'Crispy Chicken Rice Bowl', price: 699, category: 'ricebowls', desc: 'Crispy fried chicken fillet on a bed of aromatic rice with special sauce' },
+            { name: 'Al-Arab Shawarma', price: 749, category: 'shawarmas', desc: 'Classic Al-Arab shawarma with fresh veggies, garlic sauce, and secret spices' },
+            { name: 'Shawarma Al-Sham', price: 749, category: 'shawarmas', desc: 'Traditional Al-Sham style shawarma with tender chicken and oriental spices' },
+            { name: 'Chicken Mandi', price: 990, category: 'mandi', desc: 'Aromatic spiced rice with tender chicken' },
+
+            { name: 'Hummus with Pita Bread', price: 299, category: 'sides', desc: 'Creamy hummus served with fresh warm pita bread' },
+            { name: 'Hummus with Shawarma Chicken', price: 499, category: 'sides', desc: 'Rich hummus topped with tender shawarma chicken pieces' },
+            { name: 'Loaded Fries', price: 749, category: 'sides', desc: 'Crispy fries loaded with chicken, cheese and special sauces' },
+            { name: 'Chocolate Fudge Cake', price: 650, category: 'desserts', desc: 'Rich and moist chocolate fudge cake with velvety ganache' },
+            { name: 'Chocolate Milk Cake', price: 600, category: 'desserts', desc: 'Soft and fluffy milk cake soaked in rich chocolate sauce' },
+            { name: 'Baked Cheese Cake', price: 550, category: 'desserts', desc: 'Creamy baked cheesecake with a buttery graham cracker crust' },
+            { name: 'Bread', price: 80, category: 'addons', desc: 'Fresh bread' },
+            { name: 'Lemonade', price: 349, category: 'addons', desc: 'Refreshing lemonade' },
+            { name: 'Peach Ice Tea', price: 349, category: 'addons', desc: 'Chilled peach ice tea' },
+            { name: 'Water', price: 110, category: 'addons', desc: 'Mineral water' },
+            { name: '(345 ML) Drink', price: 180, category: 'addons', desc: '345 ml soft drink' },
+            { name: 'Fries', price: 249, category: 'addons', desc: 'Crispy golden fries' },
+            { name: 'Extra Shawarma Chicken', price: 400, category: 'addons', desc: 'Extra shawarma chicken portion' },
+            { name: '1.5 ltr Drink', price: 550, category: 'addons', desc: '1.5 liter bottle' },
+            { name: 'Extra Dip', price: 99, category: 'addons', desc: 'Choose any dip' },
+            { name: 'Make It A Meal', price: 349, category: 'addons', desc: 'Upgrade to a full meal' },
+            { name: 'Extra Rice', price: 250, category: 'addons', desc: 'Extra portion of rice' }
+        ];
+
+        function searchItems(query, inputId, resultsId) {
+            const resultsDiv = document.getElementById(resultsId);
+            if (!resultsDiv) return;
+            if (query.length < 2) {
+                resultsDiv.classList.add('hidden');
+                return;
+            }
+
+            const filtered = allMenuItems.filter(item => 
+                item.name.toLowerCase().includes(query.toLowerCase()) ||
+                item.desc.toLowerCase().includes(query.toLowerCase())
+            );
+
+            if (filtered.length === 0) {
+                resultsDiv.innerHTML = '<div class="p-4 text-center text-gray-500">No items found</div>';
+            } else {
+                resultsDiv.innerHTML = filtered.map(item => `
+                    <div class="flex items-center justify-between p-3 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-0" onclick="addToCart('${item.name.replace(/'/g, "\\'")}', ${item.price}); document.getElementById('${resultsId}').classList.add('hidden'); document.getElementById('${inputId}').value = '';">
+                        <div class="flex-1">
+                            <div class="font-semibold text-sm text-gray-800">${item.name}</div>
+                            <div class="text-xs text-gray-500">${item.desc}</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold text-sm text-gray-900">Rs. ${item.price.toLocaleString()}</div>
+                            <button class="text-xs text-wrap-accent font-semibold hover:underline">Add +</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            resultsDiv.classList.remove('hidden');
+        }
+
+        function scrollToItem(name) {
+            document.getElementById('heroResults')?.classList.add('hidden');
+            document.getElementById('modalResults')?.classList.add('hidden');
+            document.getElementById('heroSearch') && (document.getElementById('heroSearch').value = '');
+            document.getElementById('modalSearch') && (document.getElementById('modalSearch').value = '');
+            
+            // Find and highlight the item
+            showToast(name + ' - Scroll to view');
+        }
+
+        // Close search results when clicking outside
+        document.addEventListener('click', function(e) {
+            const heroResults = document.getElementById('heroResults');
+            const modalResults = document.getElementById('modalResults');
+            const heroSearch = document.getElementById('heroSearch');
+            const modalSearch = document.getElementById('modalSearch');
+            
+            if (heroResults && heroSearch && !heroResults.contains(e.target) && e.target !== heroSearch) {
+                heroResults.classList.add('hidden');
+            }
+            if (modalResults && modalSearch && !modalResults.contains(e.target) && e.target !== modalSearch) {
+                modalResults.classList.add('hidden');
+            }
+        });
+
+        // Filter Menu
+        function filterMenu(cat, btn) {
+            document.querySelectorAll('.cat-btn').forEach(b => {
+                b.className = 'cat-btn flex items-center gap-2 px-4 py-2.5 bg-white border-2 border-gray-200 text-gray-700 rounded-full text-sm font-medium whitespace-nowrap hover:border-gray-400 transition-all';
+            });
+            btn.className = 'cat-btn active flex items-center gap-2 px-4 py-2.5 bg-wrap-primary text-wrap-accent rounded-full text-sm font-medium whitespace-nowrap transition-all shadow-md';
+            document.querySelectorAll('.menu-section').forEach(s => {
+                s.style.display = (cat === 'all' || s.dataset.category === cat) ? 'block' : 'none';
+            });
+        }
+
+        // Highlight category based on scroll position
+        function highlightCategoryByScroll() {
+            const sections = document.querySelectorAll('.menu-section');
+            const catBtns = document.querySelectorAll('.cat-btn');
+            const categoryNav = document.getElementById('categoryNav');
+            
+            let currentCategory = '';
+            
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 150 && rect.bottom >= 150) {
+                    currentCategory = section.dataset.category;
+                }
+            });
+            
+            if (currentCategory) {
+                catBtns.forEach(btn => {
+                    const btnCategory = btn.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+                    if (btnCategory === currentCategory) {
+                        btn.className = 'cat-btn active flex items-center gap-2 px-4 py-2.5 bg-wrap-primary text-wrap-accent rounded-full text-sm font-medium whitespace-nowrap transition-all shadow-md';
+                        // Scroll the button into view within the category bar
+                        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    } else {
+                        btn.className = 'cat-btn flex items-center gap-2 px-4 py-2.5 bg-white border-2 border-gray-200 text-gray-700 rounded-full text-sm font-medium whitespace-nowrap hover:border-gray-400 transition-all';
+                    }
+                });
+            }
+        }
+
+
+        // Intersection Observer for smoother category detection
+        const categoryObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const category = entry.target.dataset.category;
+                    const catBtns = document.querySelectorAll('.cat-btn');
+                    
+                    catBtns.forEach(btn => {
+                        const onclickAttr = btn.getAttribute('onclick');
+                        const btnCategory = onclickAttr ? onclickAttr.match(/'([^']+)'/)?.[1] : null;
+                        if (btnCategory === category) {
+                            btn.className = 'cat-btn active flex items-center gap-2 px-4 py-2.5 bg-wrap-primary text-wrap-accent rounded-full text-sm font-medium whitespace-nowrap transition-all shadow-md';
+                            btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                        } else {
+                            btn.className = 'cat-btn flex items-center gap-2 px-4 py-2.5 bg-white border-2 border-gray-200 text-gray-700 rounded-full text-sm font-medium whitespace-nowrap hover:border-gray-400 transition-all';
+                        }
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.menu-section').forEach(section => {
+            categoryObserver.observe(section);
+        });
+
+        // Cart Functions
+        function addToCart(name, price) {
+            const existing = cart.find(i => i.name === name);
+            if (existing) existing.qty++;
+            else cart.push({ name, price, qty: 1 });
+            updateCart();
+            showToast(name + ' added to cart!');
+        }
+        function updateCart() {
+            const count = cart.reduce((s, i) => s + i.qty, 0);
+            document.getElementById('cartCount').textContent = count;
+            const body = document.getElementById('cartBody');
+            const footer = document.getElementById('cartFooter');
+            if (!cart.length) {
+                body.innerHTML = '<div class="flex flex-col items-center justify-center h-full text-gray-400 text-center"><i class="fas fa-shopping-basket text-5xl mb-4 opacity-50"></i><p class="font-semibold text-gray-500">Your cart is empty</p></div>';
+                footer.classList.add('hidden');
+                return;
+            }
+            let html = '', total = 0;
+            cart.forEach((item, idx) => {
+                total += item.price * item.qty;
+                html += '<div class="flex items-center gap-3 py-3 border-b border-gray-100"><div class="flex-1"><div class="font-semibold text-sm">' + item.name + '</div><div class="text-xs text-gray-500">Rs. ' + item.price + ' x ' + item.qty + '</div></div><div class="flex items-center gap-2 bg-gray-100 rounded-full p-1"><button onclick="cartQty(' + idx + ',-1)" class="h-6 w-6 bg-wrap-primary text-white rounded-full text-xs flex items-center justify-center">-</button><span class="text-sm font-semibold min-w-[16px] text-center">' + item.qty + '</span><button onclick="cartQty(' + idx + ',1)" class="h-6 w-6 bg-wrap-primary text-white rounded-full text-xs flex items-center justify-center">+</button></div></div>';
+            });
+            body.innerHTML = html;
+            document.getElementById('cartTotal').textContent = 'Rs. ' + total.toLocaleString();
+            footer.classList.remove('hidden');
+        }
+        function cartQty(idx, delta) {
+            cart[idx].qty += delta;
+            if (cart[idx].qty <= 0) cart.splice(idx, 1);
+            updateCart();
+        }
+        function openCart() {
+            document.getElementById('cartOverlay').classList.remove('opacity-0', 'invisible');
+            document.getElementById('cartSidebar').style.right = '0';
+        }
+        function closeCart() {
+            document.getElementById('cartOverlay').classList.add('opacity-0', 'invisible');
+            document.getElementById('cartSidebar').style.right = '-400px';
+        }
+
+        // WhatsApp Checkout
+        function checkoutWhatsApp() {
+            if (!cart.length) {
+                showToast('Your cart is empty!');
+                return;
+            }
+
+            const phoneNumber = '923029464542';
+            let total = 0;
+            let itemLines = '';
+
+            cart.forEach((item, idx) => {
+                const itemTotal = item.price * item.qty;
+                total += itemTotal;
+                itemLines += `${idx + 1}. ${item.name}\n   Qty: ${item.qty} x Rs. ${item.price.toLocaleString()} = Rs. ${itemTotal.toLocaleString()}\n`;
+            });
+
+            if (total < 600) {
+                showToast('Minimum order is Rs. 600');
+                return;
+            }
+
+            const orderTypeLabel = selectedOrderType === 'pickup' ? 'Pick-Up' : 'Delivery';
+
+            const message = `🍽️ *Desi Twist - Order Bill*\n` +
+                `━━━━━━━━━━━━━━━━━━\n\n` +
+                `${itemLines}` +
+                `━━━━━━━━━━━━━━━━━━\n` +
+                `💰 *Total: Rs. ${total.toLocaleString()}*\n` +
+                `━━━━━━━━━━━━━━━━━━\n\n` +
+                `📍 *Order Type:* ${orderTypeLabel}\n` +
+                `📞 *Contact:* 0302-9464542\n\n` +
+                `Thank you for ordering! 🙏`;
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+
+            window.open(whatsappURL, '_blank');
+        }
+
+        // Search
+        function openSearch() {
+            document.getElementById('searchOverlay').classList.remove('opacity-0', 'invisible');
+            document.getElementById('searchModal').classList.remove('top-[-100px]', 'opacity-0', 'invisible');
+            document.getElementById('searchModal').style.top = '80px';
+            setTimeout(() => {
+                const modalInput = document.getElementById('modalSearch');
+                if (modalInput) modalInput.focus();
+            }, 100);
+        }
+        function closeSearch() {
+            document.getElementById('searchOverlay').classList.add('opacity-0', 'invisible');
+            document.getElementById('searchModal').classList.add('top-[-100px]');
+            document.getElementById('searchModal').style.top = '-100px';
+        }
+
+        // Branch Modal
+        function openBranchModal() {
+            document.getElementById('branchOverlay').classList.remove('opacity-0', 'invisible');
+            document.getElementById('branchModal').classList.remove('scale-95', 'opacity-0', 'invisible');
+            document.getElementById('branchModal').style.transform = 'translate(-50%, -50%) scale(1)';
+        }
+        function closeBranchModal() {
+            document.getElementById('branchOverlay').classList.add('opacity-0', 'invisible');
+            document.getElementById('branchModal').style.transform = 'translate(-50%, -50%) scale(0.95)';
+        }
+        function selectBranch(el) {
+            document.querySelectorAll('#branchModal > div:last-child > div').forEach(i => {
+                i.className = 'flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-transparent';
+                i.querySelector('i').className = 'fas fa-check-circle text-gray-300';
+            });
+            el.className = 'flex items-center gap-3 p-3 rounded-xl cursor-pointer hover:bg-gray-50 border-2 border-wrap-accent bg-wrap-accent/10';
+            el.querySelector('i').className = 'fas fa-check-circle text-wrap-accent';
+            closeBranchModal();
+            showToast('Branch selected!');
+        }
+
+        // Mobile Menu
+        function openMobileMenu() {
+            document.getElementById('mobileOverlay').classList.remove('opacity-0', 'invisible');
+            document.getElementById('mobileMenu').style.left = '0';
+        }
+        function closeMobileMenu() {
+            document.getElementById('mobileOverlay').classList.add('opacity-0', 'invisible');
+            document.getElementById('mobileMenu').style.left = '-300px';
+        }
+
+        // Toast
+        function showToast(msg) {
+            document.getElementById('toastMsg').textContent = msg;
+            const t = document.getElementById('toast');
+            t.classList.remove('translate-y-5', 'opacity-0');
+            setTimeout(() => t.classList.add('translate-y-5', 'opacity-0'), 2000);
+        }
+
+        // Location Modal Functions
+        let selectedOrderType = 'delivery';
+        let selectedCity = '';
+        let selectedLocation = '';
+
+        const locations = {
+            'dha5': [
+                'Sector A', 'Sector B', 'Sector C', 'Sector D',
+                'Sector E', 'Sector F', 'Sector G', 'Sector H',
+                'Overseas Sector J', 'Overseas Sector K'
+            ],
+            'dha2': [
+                'Sector A', 'Sector B', 'Sector C', 'Sector D',
+                'Sector E', 'Sector F', 'Sector G', 'Sector H',
+                'Sector I', 'Sector J'
+            ]
+        };
+
+        function selectOrderType(type) {
+            selectedOrderType = type;
+            document.getElementById('deliveryBtn').className = type === 'delivery' 
+                ? 'order-type-btn px-6 py-2 rounded-full text-sm font-semibold transition-all bg-gray-900 text-white'
+                : 'order-type-btn px-6 py-2 rounded-full text-sm font-semibold transition-all text-gray-600';
+            document.getElementById('pickupBtn').className = type === 'pickup'
+                ? 'order-type-btn px-6 py-2 rounded-full text-sm font-semibold transition-all bg-gray-900 text-white'
+                : 'order-type-btn px-6 py-2 rounded-full text-sm font-semibold transition-all text-gray-600';
+        }
+
+        function updateLocationSelect() {
+            const city = document.getElementById('citySelect').value;
+            const locationSelect = document.getElementById('locationSelect');
+            
+            if (city && locations[city]) {
+                locationSelect.disabled = false;
+                locationSelect.innerHTML = '<option value="">Select Location</option>';
+                locations[city].forEach(loc => {
+                    locationSelect.innerHTML += '<option value="' + loc + '">' + loc + '</option>';
+                });
+                selectedCity = city;
+            } else {
+                locationSelect.disabled = true;
+                locationSelect.innerHTML = '<option value="">Select location first</option>';
+                selectedCity = '';
+                selectedLocation = '';
+            }
+            checkSelections();
+        }
+
+        function checkSelections() {
+            const city = document.getElementById('citySelect').value;
+            const location = document.getElementById('locationSelect').value;
+            const btn = document.getElementById('continueBtn');
+            
+            selectedCity = city;
+            selectedLocation = location;
+            
+            if (city && location) {
+                btn.disabled = false;
+                btn.className = 'w-full py-3.5 bg-gray-900 text-white font-semibold rounded-xl transition-all hover:bg-gray-800';
+            } else {
+                btn.disabled = true;
+                btn.className = 'w-full py-3.5 bg-gray-900 text-white font-semibold rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-800';
+            }
+        }
+
+        function useCurrentLocation() {
+            if (navigator.geolocation) {
+                showToast('Detecting location...');
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        document.getElementById('citySelect').value = 'dha5';
+                        updateLocationSelect();
+                        document.getElementById('locationSelect').value = 'Sector F';
+                        selectedLocation = 'Sector F';
+                        checkSelections();
+                        showToast('Default location set. Please adjust if needed.');
+                    },
+                    (error) => {
+                        showToast('Unable to detect location. Please select manually.');
+                    }
+                );
+            } else {
+                showToast('Geolocation not supported. Please select manually.');
+            }
+        }
+
+        function closeLocationModal() {
+            const modal = document.getElementById('locationModal');
+            modal.style.opacity = '0';
+            modal.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+                
+                // Update header location text
+                if (selectedLocation && selectedCity) {
+                    const cityNames = {
+                        'dha5': 'DHA Phase 5',
+                        'dha2': 'DHA Phase 2'
+                    };
+                    const cityLabel = cityNames[selectedCity] || selectedCity;
+                    document.getElementById('headerLocation').textContent = selectedLocation + ', ' + cityLabel;
+                }
+            }, 300);
+        }
+
+        // Show modal on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading screen after 800ms
+            const loadingScreen = document.getElementById('loadingScreen');
+            if (loadingScreen) {
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                    }, 500);
+                }, 800);
+            }
+
+            const modal = document.getElementById('locationModal');
+            modal.style.display = 'flex';
+            modal.style.opacity = '1';
+            document.body.style.overflow = 'hidden';
+            
+            // Initialize category highlighting
+            setTimeout(() => {
+                highlightCategoryByScroll();
+            }, 100);
+        });
+
+        // Navbar hide/show on scroll + category detection
+        const mainNav = document.getElementById('mainNav');
+        const categoryNav = document.getElementById('categoryNav');
+        const categoryQuickAccess = document.getElementById('categoryQuickAccess');
+
+        // Track when category quick-access section is out of view
+        let categorySectionInView = true;
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                categorySectionInView = entry.isIntersecting;
+            });
+        }, { threshold: 0 });
+        if (categoryQuickAccess) sectionObserver.observe(categoryQuickAccess);
+
+        let lastScrollTop = 0;
+        let scrollTicking = false;
+        window.addEventListener('scroll', function() {
+            if (!scrollTicking) {
+                window.requestAnimationFrame(function() {
+                    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                    highlightCategoryByScroll();
+
+                    if (mainNav && categoryNav) {
+                        if (scrollTop > 100) {
+                            if (scrollTop > lastScrollTop) {
+                                mainNav.style.transform = 'translateY(-100%)';
+                            } else {
+                                mainNav.style.transform = 'translateY(0)';
+                            }
+                        } else {
+                            mainNav.style.transform = 'translateY(0)';
+                            categorySectionInView = true;
+                        }
+
+                        // Only show sticky category nav when quick-access section is out of view
+                        if (categorySectionInView) {
+                            categoryNav.classList.add('hidden');
+                        } else {
+                            categoryNav.classList.remove('hidden');
+                        }
+                    }
+
+                    lastScrollTop = scrollTop;
+                    scrollTicking = false;
+                });
+                scrollTicking = true;
+            }
+        }, { passive: true });
+    </script>
+</body>
+</html>
